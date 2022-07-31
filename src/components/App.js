@@ -11,11 +11,21 @@ function App() {
     .then(data => setListings(data))
   }, [])
 
+  function handleDeleteListing(deletedListing) {
+    const newList = listings.filter(listing => listing.id !== deletedListing.id)
+    setListings(newList)
+  }
+
+  function handleSearchBar(newSearch) {
+    const searchedItems = listings.filter(listing => listing.description.includes(newSearch))
+    setListings(searchedItems)
+  }
+
   
   return (
     <div className="app">
-      <Header />
-      <ListingsContainer listings={listings} />
+      <Header onFilteredListings={handleSearchBar}/>
+      <ListingsContainer listings={listings} onDeleteListing={handleDeleteListing} />
     </div>
   );
 }
